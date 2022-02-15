@@ -96,10 +96,10 @@ export default class BudgetTracker {
   updateSummary() {
     const total = this.getEntryRows().reduce((total, row) => {
       const amount = row.querySelector(".input-amount").value;
-      const isExpense = row.querySelector(".input-type").value === "expense";
-      const modifier = isExpense ? -1 : 1;
+      const isExpense = row.querySelector(".input-type").value === "expense"; // type checking weather value is isExpense or NOT
+      const modifier = isExpense ? -1 : 1; // Turnary to check either to add or sub
 
-      return total + amount * modifier;
+      return total + amount * modifier; // Decide the value to be positive or negative
     }, 0);
 
     const totalFormatted = new Intl.NumberFormat("en-US", {
@@ -107,7 +107,7 @@ export default class BudgetTracker {
       currency: "NPR",
     }).format(total);
 
-    this.root.querySelector(".total").textContent = totalFormatted;
+    this.root.querySelector(".total").textContent = totalFormatted; //Stored value will rendered in textContent
   }
 
   save() {
@@ -122,6 +122,7 @@ export default class BudgetTracker {
 
     localStorage.setItem("budget-tracker-entries-dev", JSON.stringify(data));
     this.updateSummary();
+    //Update summary each time after applying SAVE
   }
 
   addEntry(entry = {}) {
