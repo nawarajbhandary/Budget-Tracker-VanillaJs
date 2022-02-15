@@ -10,6 +10,7 @@ export default class BudgetTracker {
     // Load initial data from Local Storage
     this.load();
   }
+  // We can write HTML code inside js by using ` HTML code here..... `
 
   static html() {
     return `
@@ -73,12 +74,24 @@ export default class BudgetTracker {
       localStorage.getItem("budget-tracker-entries-dev") || "[]"
     );
 
-    for (const entry of entries) {
+    /*
+
+   for (const entry of entries) {
       this.addEntry(entry);
     }
 
+    CLEAN CODE USING MAP FUNCTION 
+      */
+
+    entries.map((entry) => {
+      this.addEntry(entry);
+    });
+
     this.updateSummary();
   }
+
+  // .reduce is an array method, that take an array as and extract the
+  // SINGLE value from the so many field and parameter
 
   updateSummary() {
     const total = this.getEntryRows().reduce((total, row) => {
@@ -91,7 +104,7 @@ export default class BudgetTracker {
 
     const totalFormatted = new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: "NPR",
     }).format(total);
 
     this.root.querySelector(".total").textContent = totalFormatted;
@@ -143,5 +156,6 @@ export default class BudgetTracker {
   onDeleteEntryBtnClick(e) {
     e.target.closest("tr").remove();
     this.save();
+    //After removing the tr parent, only AFTER saving we can see the changes
   }
 }
